@@ -1,3 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 function printLabel(labelObj) {
     console.log(labelObj.label);
 }
@@ -16,4 +29,47 @@ function createSqure(config) {
 var mysqura = createSqure({ width: 10, color: 'red' });
 console.log('mysqura', mysqura);
 var p1 = { x: 10, y: 20 };
-p1.x = 5;
+// p1.x = 5
+var arr = [1, 2, 3, 4];
+var ro = arr;
+// ro[0] = 2
+// ro.push(5)
+// ro.length = 100
+// arr = ro
+arr = ro;
+function createSqure2(config) {
+    var squre = { area: 100, color: 'blue' };
+    if (config.width) {
+        squre.area = config.width * config.width;
+    }
+    if (config.color) {
+        squre.color = config.color;
+    }
+    return squre;
+}
+var squraParams = { colour: 'red', width: 100 };
+var mySqure2 = createSqure2(squraParams);
+// let mySqure2 = createSqure2({colour: 'red', width: 100})
+// let mySqure2 = createSqure2({colour: 'red', width: 100} as squreConfig2)
+// let mySqure2 = createSqure2({colour: 'red', width: 100})
+console.log(mySqure2);
+var mySearch;
+mySearch = function (src, sub) {
+    var result = src.search(sub);
+    return result > -1;
+};
+var myArray;
+myArray = ['bib', 'cic'];
+var myStr = myArray[0];
+var Animal = /** @class */ (function () {
+    function Animal() {
+    }
+    return Animal;
+}());
+var Dog = /** @class */ (function (_super) {
+    __extends(Dog, _super);
+    function Dog() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return Dog;
+}(Animal));
