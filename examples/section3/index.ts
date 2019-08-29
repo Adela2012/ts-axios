@@ -148,4 +148,82 @@ interface ClockInterface2 {
   tick()
 }
 
-// function createClock (ctor: ClockCont)
+function createClock (ctor: ClockConstructor2, hour: number, minute: number): ClockInterface2 {
+  return new ctor(hour, minute)
+}
+
+class DigitalClock implements ClockInterface2 {
+  constructor(h: number, m: number) {}
+  tick() {
+    console.log('bepe beeep')
+  }
+}
+
+class AnalogClock implements ClockInterface2 {
+  constructor(h: number, m: number) {}
+  tick() {
+    console.log('tick tock')
+  }
+}
+
+let digital = createClock(DigitalClock, 12, 17)
+let analog = createClock(AnalogClock, 52, 37)
+
+console.log(digital, analog)
+
+/** 继承接口 */
+interface Shape {
+  color: string
+}
+
+interface PenStroke {
+  penWidth: number
+}
+
+interface Square extends Shape, PenStroke {
+  sideLength: number
+}
+
+let square = {} as Square
+square.color = 'red'
+square.sideLength = 10
+square.penWidth = 1.2
+
+/** 混合类型 */
+interface Counter {
+  (start: number): string
+  interval: number
+  reset(): void
+}
+
+function getCounter(): Counter {
+  let counter = (function (start: number) {}) as Counter
+  counter.interval = 123
+  counter.reset = function () {}
+  return counter
+}
+
+let c = getCounter()
+c(10)
+c.reset()
+c.interval = 5
+
+/** 接口继承类 */
+class Control {
+  private state: any
+}
+interface SelectableControl extends Control {
+  select(): void
+}
+
+class Button extends Control implements SelectableControl {
+  select() {}
+}
+
+class TextBox extends Control {
+  select() {}
+}
+
+// class ImageC implements SelectableControl {
+//   select() {}
+// }

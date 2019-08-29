@@ -73,3 +73,34 @@ var Dog = /** @class */ (function (_super) {
     }
     return Dog;
 }(Animal));
+var myArray2 = ['a', 'b'];
+var Clock = /** @class */ (function () {
+    function Clock(h, m) {
+    }
+    Clock.prototype.setTime = function (d) {
+        this.currentTime = d;
+    };
+    return Clock;
+}());
+function createClock(ctor, hour, minute) {
+    return new ctor(hour, minute);
+}
+var DigitalClock = /** @class */ (function () {
+    function DigitalClock(h, m) {
+    }
+    DigitalClock.prototype.tick = function () {
+        console.log('bepe beeep');
+    };
+    return DigitalClock;
+}());
+var AnalogClock = /** @class */ (function () {
+    function AnalogClock(h, m) {
+    }
+    AnalogClock.prototype.tick = function () {
+        console.log('tick tock');
+    };
+    return AnalogClock;
+}());
+var digital = createClock(DigitalClock, 12, 17);
+var analog = createClock(AnalogClock, 52, 37);
+console.log(digital, analog);
