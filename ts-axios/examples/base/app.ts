@@ -1,5 +1,31 @@
 import axios from '../../src/index'
 
+/**
+ * post
+ */
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+const arr = new Int32Array([21, 32])
+
+axios({
+  method: 'post',
+  url: '/base/buffer',
+  data: arr
+})
+
+
+
+
+/**
+ * get
+ */
 axios({
   method: 'get',
   url: '/base/get',
