@@ -21,6 +21,7 @@ export interface AxiosRequestConfig {
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType // 字符串字面量类型 "" | "arraybuffer" | "blob" | "document" | "json" | "text"
+  timeout?: number
 }
 
 export interface AxiosResponse {
