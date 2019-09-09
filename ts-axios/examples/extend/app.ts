@@ -8,6 +8,14 @@ axios({
   }
 })
 
+
+axios('/extend/post', {
+  method: 'post',
+  data: {
+    msg: 'hello 函数重载'
+  }
+})
+
 axios.request({
   url: '/extend/post',
   method: 'post',
