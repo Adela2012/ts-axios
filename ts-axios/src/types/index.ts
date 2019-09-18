@@ -1,3 +1,5 @@
+import { transformRequest } from "../helpers/data";
+
 export type Method =
   | 'get'
   | 'GET'
@@ -21,6 +23,8 @@ export interface AxiosRequestConfig {
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType // 字符串字面量类型 "" | "arraybuffer" | "blob" | "document" | "json" | "text"
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+  transformResponse?: AxiosTransformer | AxiosTransformer[]
   timeout?: number
   [propName: string]: any // 字符串索引签名
 }
@@ -80,4 +84,8 @@ export interface ResolvedFn<T = any> {
 
 export interface RejectedFn {
   (error: any): any
+}
+
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
 }
