@@ -26,6 +26,8 @@ export interface AxiosRequestConfig {
   transformResponse?: AxiosTransformer | AxiosTransformer[]
   withCredentials?: boolean
   cancelToken?: CancelToken
+  xsrfCookieName?: string
+  xsrfHeaderName?: string
   timeout?: number
   [propName: string]: any // 字符串索引签名
 }

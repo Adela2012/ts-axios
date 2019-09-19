@@ -53,3 +53,31 @@ export function buildURL (url: string, params?: any) {
   return url
 }
 
+// xsrf防御
+
+interface URLOrigin {
+  protocol: string
+  host: string
+}
+
+let urlParsingNode = document.createElement('a')
+
+function resolveUrl(url: string): URLOrigin {
+  urlParsingNode.setAttribute('href', url)
+  const {protocol, host} = urlParsingNode
+
+  return {
+    protocol,
+    host
+  }
+}
+
+const currentOrigin = resolveUrl(window.location.href)
+
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parsedOrigin = resolveUrl(requestURL)
+  return (
+    parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
+  )
+}
+
