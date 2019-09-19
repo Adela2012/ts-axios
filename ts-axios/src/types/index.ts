@@ -24,6 +24,7 @@ export interface AxiosRequestConfig {
   responseType?: XMLHttpRequestResponseType // 字符串字面量类型 "" | "arraybuffer" | "blob" | "document" | "json" | "text"
   transformRequest?: AxiosTransformer | AxiosTransformer[]
   transformResponse?: AxiosTransformer | AxiosTransformer[]
+  withCredentials?: boolean
   cancelToken?: CancelToken
   timeout?: number
   [propName: string]: any // 字符串索引签名
