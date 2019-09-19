@@ -21,6 +21,7 @@ const instance = axios.create({
   transformRequest: [
     (function(data) {
       return qs.stringify(data)
+      // return data
     }),
     ...(axios.defaults.transformRequest as AxiosTransformer[])
   ],
