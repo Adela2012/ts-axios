@@ -22,13 +22,15 @@ export interface AxiosRequestConfig {
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType // 字符串字面量类型 "" | "arraybuffer" | "blob" | "document" | "json" | "text"
+  timeout?: number
   transformRequest?: AxiosTransformer | AxiosTransformer[]
   transformResponse?: AxiosTransformer | AxiosTransformer[]
   withCredentials?: boolean
   cancelToken?: CancelToken
   xsrfCookieName?: string
   xsrfHeaderName?: string
-  timeout?: number
+  onDownloadProgress?: (e: ProgressEvent) => void
+  onUploadProgress?: (e: ProgressEvent) => void
   [propName: string]: any // 字符串索引签名
 }
 
