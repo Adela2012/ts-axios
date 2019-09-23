@@ -1,6 +1,6 @@
-import {isPlainObject, deepMerge} from './util'
-import {Method} from '../types'
-function normalizeHeaderName (headers: any, normalizedName: string): void {
+import { isPlainObject, deepMerge } from './util'
+import { Method } from '../types'
+function normalizeHeaderName(headers: any, normalizedName: string): void {
   if (!headers) {
     return
   }
@@ -12,7 +12,7 @@ function normalizeHeaderName (headers: any, normalizedName: string): void {
   })
 }
 
-export function processHeaders (headers: any, data: any): any {
+export function processHeaders(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
