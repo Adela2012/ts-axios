@@ -1,4 +1,3 @@
-import { transformRequest } from "../helpers/data";
 export type Method =
   | 'get'
   | 'GET'
@@ -60,6 +59,12 @@ export interface AxiosError extends Error {
 }
 
 export interface Axios {
+  defaults: AxiosRequestConfig
+  interceptors: {
+    request: AxiosInterceptorManager<AxiosRequestConfig>
+    response: AxiosInterceptorManager<AxiosResponse>
+  }
+
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
@@ -99,7 +104,7 @@ export interface AxiosStatic extends AxiosInstance {
 }
 
 export interface AxiosClassStatic {
-  new (config: AxiosRequestConfig): Axios
+  new(config: AxiosRequestConfig): Axios
 }
 
 export interface AxiosInterceptorManager<T> {
