@@ -1,27 +1,40 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import { parseHeaders } from '../helpers/headers';
 import { createError } from '../helpers/error'
-import CancelToken from '../cancel/CancelToken';
 import { isURLSameOrigin } from '../helpers/url';
 import cookie from '../helpers/cookie'
 import { isFormData } from '../helpers/util';
+
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
 
-    const { data = null, url, method = 'get', headers, responseType, timeout, cancelToken, withCredentials, xsrfCookieName, xsrfHeaderName, onDownloadProgress, onUploadProgress, auth, validateStatus } = config
+    const {
+      data = null,
+      url,
+      method,
+      headers,
+      responseType,
+      timeout,
+      cancelToken,
+      withCredentials,
+      xsrfCookieName,
+      xsrfHeaderName,
+      onDownloadProgress,
+      onUploadProgress,
+      auth,
+      validateStatus
+    } = config
 
     const request = new XMLHttpRequest()
 
-
-    request.open(method.toUpperCase(), url!, true)
+    request.open(method!.toUpperCase(), url!, true)
 
     configureRequest() // 配置 request 对象
-    addEvents ()// 给 request 添加事件处理函数
+    addEvents()// 给 request 添加事件处理函数
     processHeaders() // 处理请求 headers
     processCancel() // 处理请求取消逻辑
 
     request.send(data)
-
 
     function handleResponse(response: AxiosResponse): void {
       if (!validateStatus || validateStatus(response.status)) {
@@ -32,13 +45,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     // 配置 request 对象
-    function configureRequest (): void {
-      if (timeout) {
-        request.timeout = timeout
-      }
-
+    function configureRequest(): void {
       if (responseType) {
         request.responseType = responseType
+      }
+
+      if (timeout) {
+        request.timeout = timeout
       }
 
       if (withCredentials) {
@@ -47,7 +60,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     }
     // 给 request 添加事件处理函数
-    function addEvents (): void {
+    function addEvents(): void {
       request.onreadystatechange = function handleLoad() {
         if (request.readyState !== 4) {
           return
@@ -69,34 +82,42 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         }
         handleResponse(response)
       }
+
       request.onerror = function handleError() {
-        reject(createError('Netwok Error', config, null, request))
+        reject(createError('Network Error', config, null, request))
       }
-      request.ontimeout = function handleTimeout () {
-        reject(createError(`Timeout of ${timeout}ms exceeded`, config, 'ECONNABORTED', request))
+
+      request.ontimeout = function handleTimeout() {
+        reject(createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED', request))
       }
+
       if (onDownloadProgress) {
         request.onprogress = onDownloadProgress
       }
+
       if (onUploadProgress) {
         request.upload.onprogress = onUploadProgress
       }
     }
+
     // 处理请求 headers
     function processHeaders() {
       // 请求的数据是 FormData 类型，删除请求 headers 中的 Content-Type 字段，让浏览器自动根据请求数据设置 Content-Type
       if (isFormData(data)) {
         delete headers['Content-Type']
       }
+
       if ((withCredentials || isURLSameOrigin(url!)) && xsrfCookieName) {
         const xsrfValue = cookie.read(xsrfCookieName)
-        if (xsrfValue) {
-          headers[xsrfHeaderName!] = xsrfValue
+        if (xsrfValue && xsrfHeaderName) {
+          headers[xsrfHeaderName] = xsrfValue
         }
       }
+
       if (auth) {
-        headers['Authorization'] = 'Basic ' + btoa(auth.username+':'+auth.password)
+        headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
+
       Object.keys(headers).forEach((name) => {
         if (data === null && name.toLowerCase() === 'content-type') {
           delete headers[name]
@@ -104,15 +125,20 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
           request.setRequestHeader(name, headers[name])
         }
       })
-
     }
+
     // 处理请求取消逻辑
     function processCancel() {
       if (cancelToken) {
-        CancelToken.promise.then(reason => {
+        cancelToken.promise.then(reason => {
           request.abort()
           reject(reason)
-        })
+        }).catch(
+          /* istanbul ignore next */
+          () => {
+            // do nothing
+          }
+        )
       }
     }
   })

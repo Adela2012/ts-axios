@@ -5,7 +5,7 @@ import { transformRequest, transfromResponse } from './helpers/data'
 const defaults: AxiosRequestConfig = {
   method: 'get',
   timeout: 0,
-  headers:{
+  headers: {
     common: {
       Accept: 'application/json, text/plain, */*'
     }
@@ -13,17 +13,17 @@ const defaults: AxiosRequestConfig = {
   xsrfCookieName: 'XSRF-TOKEN',
   xsrfHeaderName: 'X-XSRF-TOKEN',
   transformRequest: [
-    function(data: any, headers: any): any {
+    function (data: any, headers: any): any {
       processHeaders(headers, data)
       return transformRequest(data)
     }
   ],
   transformResponse: [
-    function(data: any): any {
+    function (data: any): any {
       return transfromResponse(data)
     }
   ],
-  validateStatus(status:number): boolean {
+  validateStatus(status: number): boolean {
     return status >= 200 && status < 300
   }
 }

@@ -8,7 +8,12 @@ export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromis
   throwIfCancellationRequested(config)
   processConfig(config)
   return xhr(config).then(res => {
-    return transfromResponseData(res)
+    return transformResponseData(res)
+  }, e => {
+    if (e && e.response) {
+      e.response = transformResponseData(e.response)
+    }
+    return Promise.reject(e)
   })
 }
 
@@ -29,7 +34,7 @@ export function transformURL(config: AxiosRequestConfig): string {
 }
 
 // 实现响应 data 处理逻辑
-function transfromResponseData(res: AxiosResponse): AxiosResponse {
+function transformResponseData(res: AxiosResponse): AxiosResponse {
   res.data = transform(res.data, res.headers, res.config.transformResponse)
   return res
 }
