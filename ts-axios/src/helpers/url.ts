@@ -1,5 +1,12 @@
 import {isDate, isPlainObject, isURLSearchParams} from './util'
 
+// xsrf防御
+
+interface URLOrigin {
+  protocol: string
+  host: string
+}
+
 function encode(val: string): string {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
@@ -11,7 +18,7 @@ function encode(val: string): string {
     .replace(/%5D/g, ']')
 }
 
-export function buildURL (url: string, params?: any, paramsSerializer?: (params: any) => string) {
+export function buildURL (url: string, params?: any, paramsSerializer?: (params: any) => string): string {
   if (!params) {
     return url
   }
@@ -58,13 +65,6 @@ export function buildURL (url: string, params?: any, paramsSerializer?: (params:
   }
 
   return url
-}
-
-// xsrf防御
-
-interface URLOrigin {
-  protocol: string
-  host: string
 }
 
 let urlParsingNode = document.createElement('a')

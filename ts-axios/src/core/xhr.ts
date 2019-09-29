@@ -30,19 +30,14 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     request.open(method!.toUpperCase(), url!, true)
 
     configureRequest() // 配置 request 对象
+
     addEvents()// 给 request 添加事件处理函数
+
     processHeaders() // 处理请求 headers
+
     processCancel() // 处理请求取消逻辑
 
     request.send(data)
-
-    function handleResponse(response: AxiosResponse): void {
-      if (!validateStatus || validateStatus(response.status)) {
-        resolve(response)
-      } else {
-        reject(createError(`Request failed with status code ${response.status}`, config, null, request, response))
-      }
-    }
 
     // 配置 request 对象
     function configureRequest(): void {
@@ -101,7 +96,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     // 处理请求 headers
-    function processHeaders() {
+    function processHeaders(): void {
       // 请求的数据是 FormData 类型，删除请求 headers 中的 Content-Type 字段，让浏览器自动根据请求数据设置 Content-Type
       if (isFormData(data)) {
         delete headers['Content-Type']
@@ -128,7 +123,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     // 处理请求取消逻辑
-    function processCancel() {
+    function processCancel(): void {
       if (cancelToken) {
         cancelToken.promise.then(reason => {
           request.abort()
@@ -139,6 +134,14 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
             // do nothing
           }
         )
+      }
+    }
+
+    function handleResponse(response: AxiosResponse): void {
+      if (!validateStatus || validateStatus(response.status)) {
+        resolve(response)
+      } else {
+        reject(createError(`Request failed with status code ${response.status}`, config, null, request, response))
       }
     }
   })

@@ -46,9 +46,7 @@ export interface AxiosResponse<T = any> {
   request: any
 }
 
-export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {
-
-}
+export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 
 export interface AxiosError extends Error {
   config: AxiosRequestConfig
@@ -86,7 +84,12 @@ export interface Axios {
 
 export interface AxiosInstance extends Axios {
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
+
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+}
+
+export interface AxiosClassStatic {
+  new(config: AxiosRequestConfig): Axios
 }
 
 export interface AxiosStatic extends AxiosInstance {
@@ -103,12 +106,9 @@ export interface AxiosStatic extends AxiosInstance {
   Axios: AxiosClassStatic
 }
 
-export interface AxiosClassStatic {
-  new(config: AxiosRequestConfig): Axios
-}
-
 export interface AxiosInterceptorManager<T> {
   use(resolved: ResolvedFn<T>, reject?: RejectedFn): number
+
   eject(id: number): void
 }
 

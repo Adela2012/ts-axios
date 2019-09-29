@@ -34,7 +34,7 @@ describe('requests', () => {
     })
   })
 
-  test('should reject on network errors', done => {
+  test('should reject on network errors', () => {
     const resolveSpy = jest.fn((res: AxiosResponse) => {
       return res
     })
@@ -45,7 +45,10 @@ describe('requests', () => {
 
     jasmine.Ajax.uninstall()
 
-    axios('/foo').then(resolveSpy).catch(rejectSpy).then(next)
+    return axios('/foo')
+      .then(resolveSpy)
+      .catch(rejectSpy)
+      .then(next)
 
     function next(reason: AxiosResponse | AxiosError) {
       expect(resolveSpy).not.toHaveBeenCalled()
@@ -55,8 +58,6 @@ describe('requests', () => {
       expect(reason.request).toEqual(expect.any(XMLHttpRequest))
 
       jasmine.Ajax.install()
-
-      done()
     }
   })
 
@@ -242,8 +243,40 @@ describe('requests', () => {
       response = res
     })
 
-    getAjaxRequest().then(request => {
+    return getAjaxRequest().then(request => {
       expect(request.requestHeaders['Content-Type']).toBe('application/json')
+    })
+  })
+
+  test('should support array buffer response', done => {
+    let response: AxiosResponse
+
+    function str2ab(str: string) {
+      const buff = new ArrayBuffer(str.length * 2)
+      const view = new Uint16Array(buff)
+      for (let i = 0; i < str.length; i++) {
+        view[i] = str.charCodeAt(i)
+      }
+      return buff
+    }
+
+    axios('/foo', {
+      responseType: 'arraybuffer'
+    }).then(data => {
+      response = data
+    })
+
+    getAjaxRequest().then(request => {
+      request.respondWith({
+        status: 200,
+        // @ts-ignore
+        response: str2ab('Hello world')
+      })
+
+      setTimeout(() => {
+        expect(response.data.byteLength).toBe(22)
+        done()
+      }, 100);
     })
   })
 })

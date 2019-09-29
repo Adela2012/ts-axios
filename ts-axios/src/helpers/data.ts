@@ -12,7 +12,7 @@ export function transfromResponse(data: any): any {
     try {
       data = JSON.parse(data)
     } catch (e) {
-
+      // do nothing
     }
   }
   return data
