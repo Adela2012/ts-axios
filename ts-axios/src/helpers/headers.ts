@@ -4,7 +4,7 @@ function normalizeHeaderName(headers: any, normalizedName: string): void {
   if (!headers) {
     return
   }
-  Object.keys(headers).forEach((name) => {
+  Object.keys(headers).forEach(name => {
     if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
       headers[normalizedName] = headers[name]
       delete headers[name]
@@ -40,7 +40,6 @@ export function parseHeaders(headers: string): any {
 
   return parsed
 }
-
 
 export function flattenHeaders(headers: any, method: Method): any {
   if (!headers) {

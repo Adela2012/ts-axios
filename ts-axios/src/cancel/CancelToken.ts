@@ -1,4 +1,4 @@
-import { CancelExecutor, CancelTokenSource, Canceler } from "../types";
+import { CancelExecutor, CancelTokenSource, Canceler } from '../types'
 import Cancel from './Cancel'
 
 interface ResolvePromise {
@@ -11,7 +11,8 @@ export default class CancelToken {
 
   constructor(executor: CancelExecutor) {
     let resolvePromise: ResolvePromise
-    this.promise = new Promise<Cancel>(resolve => { // 实例化一个 pending 状态的 Promise 对象
+    this.promise = new Promise<Cancel>(resolve => {
+      // 实例化一个 pending 状态的 Promise 对象
       resolvePromise = resolve // resolvePromise 变量指向 resolve 函数
     })
 

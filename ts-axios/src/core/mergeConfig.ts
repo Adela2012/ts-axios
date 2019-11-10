@@ -13,7 +13,6 @@ function fromVal2Strat(val1: any, val2: any): any {
   }
 }
 
-
 function deepMergeStrat(val1: any, val2: any): any {
   if (isPlainObject(val2)) {
     return deepMerge(val1, val2)
@@ -26,13 +25,11 @@ function deepMergeStrat(val1: any, val2: any): any {
   }
 }
 
-
 const stratKeysFromVal2 = ['url', 'params', 'data']
 
 stratKeysFromVal2.forEach(key => {
   strats[key] = fromVal2Strat
 })
-
 
 const stratKeysDeepMerge = ['headers', 'auth']
 

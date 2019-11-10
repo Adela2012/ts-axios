@@ -33,7 +33,7 @@ export interface AxiosRequestConfig {
   auth?: AxiosBasicCredentials
   validateStatus?: (status: number) => boolean
   paramsSerializer?: (params: any) => string
-  baseURL?: string,
+  baseURL?: string
   [propName: string]: any // 字符串索引签名
 }
 
@@ -89,7 +89,7 @@ export interface AxiosInstance extends Axios {
 }
 
 export interface AxiosClassStatic {
-  new(config: AxiosRequestConfig): Axios
+  new (config: AxiosRequestConfig): Axios
 }
 
 export interface AxiosStatic extends AxiosInstance {
@@ -154,7 +154,7 @@ export interface CancelTokenSource {
 
 // CancelTokenStatic 则作为 CancelToken 类的类类型
 export interface CancelTokenStatic {
-  new(executor: CancelExecutor): CancelToken
+  new (executor: CancelExecutor): CancelToken
 
   source(): CancelTokenSource
 }
@@ -166,7 +166,7 @@ export interface Cancel {
 
 // 类类型的接口定义
 export interface CancelStatic {
-  new(message?: string): Cancel
+  new (message?: string): Cancel
 }
 
 export interface AxiosBasicCredentials {

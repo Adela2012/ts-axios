@@ -1,4 +1,4 @@
-import {isDate, isPlainObject, isURLSearchParams} from './util'
+import { isDate, isPlainObject, isURLSearchParams } from './util'
 
 // xsrf防御
 
@@ -18,7 +18,11 @@ function encode(val: string): string {
     .replace(/%5D/g, ']')
 }
 
-export function buildURL (url: string, params?: any, paramsSerializer?: (params: any) => string): string {
+export function buildURL(
+  url: string,
+  params?: any,
+  paramsSerializer?: (params: any) => string
+): string {
   if (!params) {
     return url
   }
@@ -31,7 +35,7 @@ export function buildURL (url: string, params?: any, paramsSerializer?: (params:
     serializedParams = params.toString()
   } else {
     const parts: string[] = []
-    Object.keys(params).forEach((key) => {
+    Object.keys(params).forEach(key => {
       let val = params[key]
       if (val === null || typeof val === 'undefined') {
         return
@@ -43,7 +47,7 @@ export function buildURL (url: string, params?: any, paramsSerializer?: (params:
       } else {
         values = [val]
       }
-      values.forEach((val) => {
+      values.forEach(val => {
         if (isDate(val)) {
           val = val.toISOString()
         } else if (isPlainObject(val)) {
@@ -71,7 +75,7 @@ let urlParsingNode = document.createElement('a')
 
 function resolveUrl(url: string): URLOrigin {
   urlParsingNode.setAttribute('href', url)
-  const {protocol, host} = urlParsingNode
+  const { protocol, host } = urlParsingNode
 
   return {
     protocol,

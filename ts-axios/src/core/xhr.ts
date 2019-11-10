@@ -1,13 +1,12 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
-import { parseHeaders } from '../helpers/headers';
+import { parseHeaders } from '../helpers/headers'
 import { createError } from '../helpers/error'
-import { isURLSameOrigin } from '../helpers/url';
+import { isURLSameOrigin } from '../helpers/url'
 import cookie from '../helpers/cookie'
-import { isFormData } from '../helpers/util';
+import { isFormData } from '../helpers/util'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-
     const {
       data = null,
       url,
@@ -31,7 +30,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     configureRequest() // 配置 request 对象
 
-    addEvents()// 给 request 添加事件处理函数
+    addEvents() // 给 request 添加事件处理函数
 
     processHeaders() // 处理请求 headers
 
@@ -52,7 +51,6 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (withCredentials) {
         request.withCredentials = withCredentials
       }
-
     }
     // 给 request 添加事件处理函数
     function addEvents(): void {
@@ -66,7 +64,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         }
 
         const responseHeaders = parseHeaders(request.getAllResponseHeaders())
-        const responseData = responseType && responseType !== 'text' ? request.response : request.responseText
+        const responseData =
+          responseType && responseType !== 'text' ? request.response : request.responseText
         const response: AxiosResponse = {
           data: responseData,
           status: request.status,
@@ -113,7 +112,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
 
-      Object.keys(headers).forEach((name) => {
+      Object.keys(headers).forEach(name => {
         if (data === null && name.toLowerCase() === 'content-type') {
           delete headers[name]
         } else {
@@ -125,15 +124,17 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     // 处理请求取消逻辑
     function processCancel(): void {
       if (cancelToken) {
-        cancelToken.promise.then(reason => {
-          request.abort()
-          reject(reason)
-        }).catch(
-          /* istanbul ignore next */
-          () => {
-            // do nothing
-          }
-        )
+        cancelToken.promise
+          .then(reason => {
+            request.abort()
+            reject(reason)
+          })
+          .catch(
+            /* istanbul ignore next */
+            () => {
+              // do nothing
+            }
+          )
       }
     }
 
@@ -141,7 +142,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (!validateStatus || validateStatus(response.status)) {
         resolve(response)
       } else {
-        reject(createError(`Request failed with status code ${response.status}`, config, null, request, response))
+        reject(
+          createError(
+            `Request failed with status code ${response.status}`,
+            config,
+            null,
+            request,
+            response
+          )
+        )
       }
     }
   })

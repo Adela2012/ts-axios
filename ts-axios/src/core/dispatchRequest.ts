@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import xhr from './xhr'
-import { buildURL, isAbsoluteURL, combineURL } from '../helpers/url';
+import { buildURL, isAbsoluteURL, combineURL } from '../helpers/url'
 import { flattenHeaders } from '../helpers/headers'
 import transform from './transform'
 
