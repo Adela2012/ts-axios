@@ -45,60 +45,78 @@ describe('mergeConfig', () => {
   })
 
   test('should return default headers if pass config2 with undefined', () => {
-
-    expect(mergeConfig({
-      headers: 'x-mock-header'
-    }, undefined)).toEqual({
+    expect(
+      mergeConfig(
+        {
+          headers: 'x-mock-header'
+        },
+        undefined
+      )
+    ).toEqual({
       headers: 'x-mock-header'
     })
   })
 
   test('should merge auth, headers with defaults', () => {
-    expect(mergeConfig({
-      auth: undefined
-    }, {
-        auth: {
-          username: 'foo',
-          password: 'test'
+    expect(
+      mergeConfig(
+        {
+          auth: undefined
+        },
+        {
+          auth: {
+            username: 'foo',
+            password: 'test'
+          }
         }
-      })).toEqual({
-        auth: {
-          username: 'foo',
-          password: 'test'
-        }
-      })
-
-    expect(mergeConfig({
+      )
+    ).toEqual({
       auth: {
         username: 'foo',
         password: 'test'
       }
-    }, {
-        auth: {
-          username: 'baz',
-          password: 'foobar'
+    })
+
+    expect(
+      mergeConfig(
+        {
+          auth: {
+            username: 'foo',
+            password: 'test'
+          }
+        },
+        {
+          auth: {
+            username: 'baz',
+            password: 'foobar'
+          }
         }
-      })).toEqual({
-        auth: {
-          username: 'baz',
-          password: 'foobar'
-        }
-      })
+      )
+    ).toEqual({
+      auth: {
+        username: 'baz',
+        password: 'foobar'
+      }
+    })
   })
 
   test('should overwrite auth, headers with a non-object value', () => {
-
-    expect(mergeConfig({
-      headers: {
-        common: {
-          Accept: 'application/json, text/plain, */*'
+    expect(
+      mergeConfig(
+        {
+          headers: {
+            common: {
+              Accept: 'application/json, text/plain, */*'
+            }
+          }
+        },
+        {
+          headers: null
         }
-      }
-    }, {
-        headers: null
-      })).toEqual({
-        headers: null
-      })
+      )
+    ).toEqual({
+      headers: null
+    })
   })
 
   test('should allow setting other options', () => {

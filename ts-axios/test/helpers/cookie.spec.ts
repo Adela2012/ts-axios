@@ -11,4 +11,3 @@ describe('helpers: cookie', () => {
     expect(cookie.read('bar')).toBeNull()
   })
 })
-

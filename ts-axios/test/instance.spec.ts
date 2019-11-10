@@ -103,13 +103,13 @@ describe('instance', () => {
   })
 
   test('should have defaults headers', () => {
-    const instance = axios.create({baseURL: 'https://api.example.com'})
+    const instance = axios.create({ baseURL: 'https://api.example.com' })
 
     expect(typeof instance.defaults.headers).toBe('object')
     expect(typeof instance.defaults.headers.common).toBe('object')
   })
 
-  test('should have interceptors on the instance', (done) => {
+  test('should have interceptors on the instance', done => {
     axios.interceptors.request.use(config => {
       config.timeout = 2000
       return config
@@ -133,7 +133,6 @@ describe('instance', () => {
       })
 
       setTimeout(() => {
-
         expect(response.config.timeout).toEqual(0)
         expect(response.config.withCredentials).toEqual(true)
         done()
@@ -151,6 +150,8 @@ describe('instance', () => {
         testString: 'thisIsATest'
       }
     }
-    expect(axios.getUri(fakeConfig)).toBe('https://www.baidu.com/user/12345?isClient=1&idTest=2&testString=thisIsATest')
+    expect(axios.getUri(fakeConfig)).toBe(
+      'https://www.baidu.com/user/12345?isClient=1&idTest=2&testString=thisIsATest'
+    )
   })
 })

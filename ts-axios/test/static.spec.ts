@@ -19,19 +19,24 @@ describe('promise', () => {
     let fulfilled = false
     let result: any
 
-    axios.all([123, 456]).then(axios.spread((a, b) => {
-      sum = a + b
-      fulfilled = true
-      return 'hello world'
-    })).then(res => {
-      result = res
-    })
+    axios
+      .all([123, 456])
+      .then(
+        axios.spread((a, b) => {
+          sum = a + b
+          fulfilled = true
+          return 'hello world'
+        })
+      )
+      .then(res => {
+        result = res
+      })
 
     setTimeout(() => {
       expect(fulfilled).toBeTruthy()
       expect(sum).toBe(123 + 456)
       expect(result).toBe('hello world')
       done()
-    }, 100);
+    }, 100)
   })
 })

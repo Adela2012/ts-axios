@@ -8,7 +8,8 @@ describe('xsrf', () => {
 
   afterEach(() => {
     jasmine.Ajax.uninstall()
-    document.cookie = axios.defaults.xsrfCookieName + '=;expires=' + new Date(Date.now() - 86400000).toUTCString()
+    document.cookie =
+      axios.defaults.xsrfCookieName + '=;expires=' + new Date(Date.now() - 86400000).toUTCString()
   })
 
   test('should not set xsrf header if cookie is null', () => {
@@ -38,7 +39,7 @@ describe('xsrf', () => {
   test('should set xsrf header for cross origin when using withCredentials', () => {
     document.cookie = axios.defaults.xsrfCookieName + '=12345'
 
-    axios('http://example.com/', {withCredentials: true})
+    axios('http://example.com/', { withCredentials: true })
     return getAjaxRequest().then(request => {
       expect(request.requestHeaders[axios.defaults.xsrfHeaderName!]).toBe('12345')
     })

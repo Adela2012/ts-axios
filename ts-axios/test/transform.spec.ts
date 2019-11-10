@@ -22,7 +22,7 @@ describe('transform', () => {
     })
   })
 
-  test('should transform string to JSON', (done) => {
+  test('should transform string to JSON', done => {
     let response: AxiosResponse
 
     axios.post('/foo').then(res => {
@@ -65,7 +65,9 @@ describe('transform', () => {
     }
 
     axios.post('/foo', data, {
-      transformRequest: (axios.defaults.transformRequest as AxiosTransformer[]).concat(function(data) {
+      transformRequest: (axios.defaults.transformRequest as AxiosTransformer[]).concat(function(
+        data
+      ) {
         return data.replace('bar', 'baz')
       })
     })

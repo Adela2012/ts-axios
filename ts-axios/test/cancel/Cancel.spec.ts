@@ -1,4 +1,4 @@
-import Cancel, {isCancel} from '../../src/cancel/Cancel'
+import Cancel, { isCancel } from '../../src/cancel/Cancel'
 
 describe('cancel: Cancel', () => {
   test('should returns correct result when message is specified', () => {
@@ -11,6 +11,6 @@ describe('cancel: Cancel', () => {
   })
 
   test('should returns false if value is not a Cancel', () => {
-    expect(isCancel({foo: 'bar'})).toBeFalsy()
+    expect(isCancel({ foo: 'bar' })).toBeFalsy()
   })
 })

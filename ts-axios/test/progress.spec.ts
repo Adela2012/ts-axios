@@ -13,7 +13,7 @@ describe('progress', () => {
   test('should add a download progress handler', () => {
     const progressSpy = jest.fn()
 
-    axios('/foo', {onDownloadProgress: progressSpy})
+    axios('/foo', { onDownloadProgress: progressSpy })
 
     return getAjaxRequest().then(request => {
       request.respondWith({
@@ -27,7 +27,7 @@ describe('progress', () => {
   test('should add a upload progress handler', () => {
     const progressSpy = jest.fn()
 
-    axios('/foo', {onUploadProgress: progressSpy})
+    axios('/foo', { onUploadProgress: progressSpy })
 
     return getAjaxRequest().then(request => {
       // Jasmine AJAX doesn't trigger upload events.Waiting for jest-ajax fix

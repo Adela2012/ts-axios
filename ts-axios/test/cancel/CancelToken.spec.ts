@@ -34,7 +34,7 @@ describe('CancelToken', () => {
   })
 
   describe('promise', () => {
-    test('should returns a Promise that resolves when cancellation is requested', (done) => {
+    test('should returns a Promise that resolves when cancellation is requested', done => {
       let cancel: Canceler
       const token = new CancelToken(c => {
         cancel = c

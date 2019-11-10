@@ -29,13 +29,14 @@ describe('auth', () => {
         username: 'Aladßç£☃din',
         password: 'open sesame'
       }
-    }).then(() => {
-      throw new Error(
-        'Should not succeed to make a HTTP Basic auth request with non-latin1 chars in credentials.'
-      )
     })
-    .catch(error => {
-      expect(/character/i.test(error.message)).toBeTruthy()
-    })
+      .then(() => {
+        throw new Error(
+          'Should not succeed to make a HTTP Basic auth request with non-latin1 chars in credentials.'
+        )
+      })
+      .catch(error => {
+        expect(/character/i.test(error.message)).toBeTruthy()
+      })
   })
 })

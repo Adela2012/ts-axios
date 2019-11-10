@@ -1,6 +1,6 @@
 {
-  "name": "ts-axios",
-  "version": "0.0.0",
+  "name": "ts-axios-adela",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "dist/axios.umd.js",
@@ -9,10 +9,10 @@
   "files": [
     "dist"
   ],
-  "author": "Adela2012 <hzydy@tairanchina.com>",
+  "author": "Adela2012 <15757124551@163.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Adela2012/ts-axios"
   },
   "license": "MIT",
   "engines": {
@@ -60,7 +60,8 @@
       "js"
     ],
     "coveragePathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/test/"
     ],
     "coverageThreshold": {
       "global": {

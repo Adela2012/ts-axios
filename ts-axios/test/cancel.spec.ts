@@ -1,7 +1,7 @@
 import axios from '../src/index'
-import {getAjaxRequest} from './helper'
+import { getAjaxRequest } from './helper'
 
-describe('cancel', ()=>{
+describe('cancel', () => {
   const CancelToken = axios.CancelToken
   const Cancel = axios.Cancel
 
@@ -18,25 +18,29 @@ describe('cancel', ()=>{
       const source = CancelToken.source()
       source.cancel('Operation has been canceled.')
 
-      return axios.get('/foo', {
-        cancelToken: source.token
-      }).catch(reason => {
-        expect(reason).toEqual(expect.any(Cancel))
-        expect(reason.message).toBe('Operation has been canceled.')
-      })
+      return axios
+        .get('/foo', {
+          cancelToken: source.token
+        })
+        .catch(reason => {
+          expect(reason).toEqual(expect.any(Cancel))
+          expect(reason.message).toBe('Operation has been canceled.')
+        })
     })
   })
 
   describe('when called after request has been sent', () => {
-    test('should rejects Promise with a Cancel object', (done) => {
+    test('should rejects Promise with a Cancel object', done => {
       const source = CancelToken.source()
-      axios.get('/foo/bar', {
-        cancelToken: source.token
-      }).catch(reason => {
-        expect(reason).toEqual(expect.any(Cancel))
-        expect(reason.message).toBe('Operation has been canceled.')
-        done()
-      })
+      axios
+        .get('/foo/bar', {
+          cancelToken: source.token
+        })
+        .catch(reason => {
+          expect(reason).toEqual(expect.any(Cancel))
+          expect(reason.message).toBe('Operation has been canceled.')
+          done()
+        })
 
       getAjaxRequest().then(request => {
         source.cancel('Operation has been canceled.')
@@ -49,15 +53,17 @@ describe('cancel', ()=>{
       })
     })
 
-    test('calls abort on request object', (done) => {
+    test('calls abort on request object', done => {
       const source = CancelToken.source()
       let request: any
-      axios.get('/foo/bar', {
-        cancelToken: source.token
-      }).catch(() => {
-        expect(request.statusText).toBe('abort')
-        done()
-      })
+      axios
+        .get('/foo/bar', {
+          cancelToken: source.token
+        })
+        .catch(() => {
+          expect(request.statusText).toBe('abort')
+          done()
+        })
 
       getAjaxRequest().then(req => {
         source.cancel()
@@ -67,17 +73,19 @@ describe('cancel', ()=>{
   })
 
   describe('when called after response has been received', () => {
-    test('should not cause unhandled rejection', (done) => {
+    test('should not cause unhandled rejection', done => {
       const source = CancelToken.source()
-      axios.get('/foo/bar', {
-        cancelToken: source.token
-      }).then(() => {
-        window.addEventListener('unhandledrejection', () => {
-          done.fail('Unhandled rejection.')
+      axios
+        .get('/foo/bar', {
+          cancelToken: source.token
         })
-        source.cancel()
-        setTimeout(done, 100);
-      })
+        .then(() => {
+          window.addEventListener('unhandledrejection', () => {
+            done.fail('Unhandled rejection.')
+          })
+          source.cancel()
+          setTimeout(done, 100)
+        })
 
       getAjaxRequest().then(request => {
         request.respondWith({
@@ -87,5 +95,4 @@ describe('cancel', ()=>{
       })
     })
   })
-
 })

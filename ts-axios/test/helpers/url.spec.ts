@@ -7,62 +7,80 @@ describe('helpers: url', () => {
     })
 
     test('should support params', () => {
-      expect(buildURL('/foo', {
-        foo: 'bar'
-      })).toBe('/foo?foo=bar')
+      expect(
+        buildURL('/foo', {
+          foo: 'bar'
+        })
+      ).toBe('/foo?foo=bar')
     })
 
     test('should ignore if some param value is null', () => {
-      expect(buildURL('/foo', {
-        foo: 'bar',
-        baz: null
-      })).toBe('/foo?foo=bar')
+      expect(
+        buildURL('/foo', {
+          foo: 'bar',
+          baz: null
+        })
+      ).toBe('/foo?foo=bar')
     })
 
     test('should ignore if the only param value is null', () => {
-      expect(buildURL('/foo', {
-        baz: null
-      })).toBe('/foo')
+      expect(
+        buildURL('/foo', {
+          baz: null
+        })
+      ).toBe('/foo')
     })
 
     test('should support object params', () => {
-      expect(buildURL('/foo', {
-        foo: {
-          bar: 'baz'
-        }
-      })).toBe('/foo?foo=' + encodeURI('{"bar":"baz"}'))
+      expect(
+        buildURL('/foo', {
+          foo: {
+            bar: 'baz'
+          }
+        })
+      ).toBe('/foo?foo=' + encodeURI('{"bar":"baz"}'))
     })
 
     test('should support data params', () => {
       const date = new Date()
-      expect(buildURL('/foo', {
-        date: date
-      })).toBe('/foo?date=' + date.toISOString())
+      expect(
+        buildURL('/foo', {
+          date: date
+        })
+      ).toBe('/foo?date=' + date.toISOString())
     })
 
     test('should support array params', () => {
       const date = new Date()
-      expect(buildURL('/foo', {
-        foo: ['bar', 'baz']
-      })).toBe('/foo?foo[]=bar&foo[]=baz')
+      expect(
+        buildURL('/foo', {
+          foo: ['bar', 'baz']
+        })
+      ).toBe('/foo?foo[]=bar&foo[]=baz')
     })
 
     test('should support special char params', () => {
-      expect(buildURL('/foo', {
-        foo: '@:$, '
-      })).toBe('/foo?foo=@:$,+')
+      expect(
+        buildURL('/foo', {
+          foo: '@:$, '
+        })
+      ).toBe('/foo?foo=@:$,+')
     })
 
     test('should support existing params', () => {
-      expect(buildURL('/foo?foo=bar', {
-        bar: 'baz'
-      })).toBe('/foo?foo=bar&bar=baz')
+      expect(
+        buildURL('/foo?foo=bar', {
+          bar: 'baz'
+        })
+      ).toBe('/foo?foo=bar&bar=baz')
     })
 
     test('should correct discard url hash mark', () => {
-      expect(buildURL('/foo?foo=bar#hash', {
-        bar: 'baz'
-      })).toBe('/foo?foo=bar&bar=baz')
+      expect(
+        buildURL('/foo?foo=bar#hash', {
+          bar: 'baz'
+        })
+      ).toBe('/foo?foo=bar&bar=baz')
     })
 
     test('should use serializer if provided', () => {
@@ -134,4 +152,3 @@ describe('helpers: url', () => {
     })
   })
 })
-

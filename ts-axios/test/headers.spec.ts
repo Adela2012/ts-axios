@@ -4,7 +4,7 @@ import { getAjaxRequest } from './helper'
 function testHeaderValue(headers: any, key: string, val?: string): void {
   let found = false
 
-  for(let k in headers) {
+  for (let k in headers) {
     if (k.toLowerCase() === key.toLowerCase()) {
       found = true
       expect(headers[k]).toBe(val)
