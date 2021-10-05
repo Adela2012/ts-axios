@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 registerSimpleRouter()
+registerBaseRouter()
 
 app.use(router)
 
@@ -43,4 +44,10 @@ function registerSimpleRouter () {
       msg: `hello world`
     })
   })
+}
+
+function registerBaseRouter() {
+    router.get('/base/get', function(req, res) {
+        res.json(req.query)
+    })
 }
